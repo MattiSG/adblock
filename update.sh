@@ -1,0 +1,1 @@
+sudo curl http://someonewhocares.org/hosts/zero/hosts -sS -o /etc/hosts
