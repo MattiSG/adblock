@@ -4,9 +4,27 @@
 SOURCE='http://someonewhocares.org/hosts/zero/hosts'
 TARGET='/etc/hosts'
 
-if [[ $1 == 'off' ]]
-then
-	sudo rm $TARGET
-else
+
+# source: http://support.apple.com/kb/HT5343
+clear_dns_cache() {
+	if sw_vers -productVersion | grep -q 10.6
+	then sudo dscacheutil -flushcache
+	else sudo killall -HUP mDNSResponder
+	fi
+}
+
+block() {
 	sudo curl $SOURCE --show-error -# --output $TARGET # -# is "show progress as a bar instead of full metrics"
+}
+
+unblock() {
+	sudo rm $TARGET
+}
+
+
+if [[ $1 == 'off' ]]
+then unblock
+else block
 fi
+
+clear_dns_cache
