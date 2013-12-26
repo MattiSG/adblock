@@ -1,0 +1,12 @@
+#!/bin/bash
+# Block ad serving and tracking system-wide even before a request is issued to them.
+
+SOURCE='http://someonewhocares.org/hosts/zero/hosts'
+TARGET='/etc/hosts'
+
+if [[ $1 == 'off' ]]
+then
+	sudo rm $TARGET
+else
+	sudo curl $SOURCE --show-error -# --output $TARGET # -# is "show progress as a bar instead of full metrics"
+fi

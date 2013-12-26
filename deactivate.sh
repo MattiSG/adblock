@@ -1,1 +1,0 @@
-sudo rm /etc/hosts
