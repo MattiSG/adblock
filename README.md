@@ -1,4 +1,4 @@
-Block ad serving and tracking system-wide, even before a request is issued to them.
+Block ad serving and tracking system-wide, even before a request is issued.
 
 
 Usage
