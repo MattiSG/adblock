@@ -8,6 +8,14 @@ Usage
 	$ adblock off	# deactivates blocking, so you can access, for example, affiliate links
 
 
+What does it block?
+-------------------
+
+Ads, shock sites, hijack sites, malware servers, click trackers, popup traps (sites that make you confirm on and on), spam sending servers…
+
+If you still see some ads after installing, please identify the domain that serves them, and send a request to Dan Pollock at hosts@someonewhocares.org.
+
+
 How does it work?
 -----------------
 
