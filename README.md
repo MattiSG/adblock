@@ -1,10 +1,10 @@
-Block ad serving and tracking system-wide, even before a request is issued.
+Block any outgoing request to ad and tracker servers, system-wide.
 
 
 Usage
 -----
 
-	$ adblock [on]	# blocks all ad servers, shock sites, click trackers according to latest definition
+	$ adblock [on]	# installs or updates the blocklist
 	$ adblock off	# deactivates blocking, so you can access, for example, affiliate links
 
 
