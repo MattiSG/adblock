@@ -8,6 +8,14 @@ Usage
 	$ adblock off	# deactivates blocking, so you can access, for example, affiliate links
 
 
+Installation
+------------
+
+You can download this repo as a ZIP and install the `adblock` script anywhere you want, or use this one-liner:
+
+	curl https://raw.github.com/MattiSG/adblock/master/adblock --output /usr/local/bin/adblock && chmod u+x /usr/local/bin/adblock
+
+
 What does it block?
 -------------------
 
