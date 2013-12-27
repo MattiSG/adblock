@@ -11,14 +11,18 @@ clear_dns_cache() {
 	then sudo dscacheutil -flushcache
 	else sudo killall -HUP mDNSResponder
 	fi
+
+	echo 'DNS cache flushed.'
 }
 
 block() {
-	sudo curl $SOURCE --show-error -# --output $TARGET # -# is "show progress as a bar instead of full metrics"
+	sudo curl $SOURCE --show-error -# --output $TARGET && # -# is "show progress as a bar instead of full metrics"
+	echo 'Hosts file updated.'
 }
 
 unblock() {
-	sudo rm $TARGET
+	sudo rm $TARGET &&
+	echo 'Hosts file deleted.'
 }
 
 should_update() {
@@ -28,7 +32,7 @@ should_update() {
 
 	if [[ $last_modified_epoch -gt $update_time ]]
 	then
-		echo "Installing update from $modification_time…"
+		echo "Recent update from $modification_time."
 		return 0
 	else
 		echo "No new updates since $modification_time."
