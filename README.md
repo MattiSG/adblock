@@ -30,5 +30,7 @@ How does it work?
 This script is a simple wrapper around downloading and installing Pollock’s [hosts file](http://someonewhocares.org/hosts/).
 
 Dan Pollock maintains a list of servers to block based on community reports. This list is then simply formatted as a [hosts file](http://en.wikipedia.org/wiki/Hosts_file).
+
 A hosts file maps hostnames (i.e. domains) to IPs. It does the same job as a DNS, but the lookup is made entirely locally.
-We use this feature to map all the domains we want to blacklist to the IP address [`0.0.0.0`](http://en.wikipedia.org/wiki/0.0.0.0).
+
+This feature is used to map all the domains to blacklist to the [`0.0.0.0` IP meta-address](http://en.wikipedia.org/wiki/0.0.0.0).
