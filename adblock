@@ -21,10 +21,26 @@ unblock() {
 	sudo rm $TARGET
 }
 
+should_update() {
+	local modification_time=$(lwp-request -m 'HEAD' "$SOURCE" | grep 'Last-Modified' | cut -d ':' -f 2- | xargs echo)	# `xargs echo` to trim leading whitespace
+	local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
+	local update_time=$(stat -f %m "$TARGET")
+
+	if [[ $last_modified_epoch -gt $update_time ]]
+	then
+		echo "Installing update from $modification_time…"
+		return 0
+	else
+		echo "No new updates since $modification_time."
+		return 1
+	fi
+}
+
 
 if [[ $1 == 'off' ]]
-then unblock
-else block
+then unblock && clear_dns_cache
+else
+	if ! [[ -a "$TARGET" ]] || should_update
+	then block && clear_dns_cache
+	fi
 fi
-
-clear_dns_cache
