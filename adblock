@@ -2,7 +2,9 @@
 # Block ad serving and tracking system-wide even before a request is issued to them.
 
 SOURCE='http://someonewhocares.org/hosts/zero/hosts'
+BACKUP='https://raw.github.com/MattiSG/adblock/master/hosts.default'
 TARGET='/etc/hosts'
+ORIGINAL='/etc/hosts.without-adblock'
 
 
 # source: http://support.apple.com/kb/HT5343
@@ -15,14 +17,36 @@ clear_dns_cache() {
 	echo 'DNS cache flushed.'
 }
 
+initialize() {
+	echo -n "Backing up your $TARGET file. "
+	if [[ -a "$TARGET" ]]
+	then sudo mv "$TARGET" "$ORIGINAL"
+	else
+		echo 'Oops, no hosts file found!'
+		read -p "Do you want to install the default one from <$BACKUP>? [y/n]" -n 1 confirm
+		if [[ $confirm == 'y' ]]
+		then curl "$BACKUP" --output "$ORIGINAL"
+		else sudo touch "$ORIGINAL"
+		fi
+	fi
+	echo "If you need to update your hosts file, edit $ORIGINAL."
+}
+
 block() {
-	sudo curl $SOURCE --show-error -# --output $TARGET && # -# is "show progress as a bar instead of full metrics"
+	local tmpfile="$TARGET.blacklist"
+
+	sudo curl $SOURCE --show-error -# --output "$tmpfile" && # -# is "show progress as a bar instead of full metrics"
+	sudo cat "$ORIGINAL" | sudo tee "$TARGET" > /dev/null &&
+	sudo cat "$tmpfile" | sudo tee -a "$TARGET" > /dev/null &&	# append to file rather than overwriting it
+	sudo rm "$tmpfile"
 	echo 'Hosts file updated.'
 }
 
 unblock() {
-	sudo rm $TARGET &&
-	echo 'Hosts file deleted.'
+	sudo rm "$TARGET" &&
+	sudo cp "$ORIGINAL" "$TARGET" &&
+	echo 'Hosts file restored.' &&
+	sudo rm "$ORIGINAL"
 }
 
 should_update() {
@@ -44,7 +68,15 @@ should_update() {
 if [[ $1 == 'off' ]]
 then unblock && clear_dns_cache
 else
-	if ! [[ -a "$TARGET" ]] || should_update
-	then block && clear_dns_cache
+	if ! [[ -a "$ORIGINAL" ]]
+	then
+		initialize &&
+		echo "Installing blocklist…" &&
+		block &&
+		clear_dns_cache
+	elif should_update
+	then
+		block &&
+		clear_dns_cache
 	fi
 fi
