@@ -54,7 +54,7 @@ should_update() {
 	local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
 	local update_time=$(stat -f %m "$TARGET")
 
-	if [[ $last_modified_epoch -gt $update_time ]]
+	if [[ $modification_time_epoch -gt $update_time ]]
 	then
 		echo "Recent update from $modification_time."
 		return 0
