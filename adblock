@@ -4,6 +4,7 @@
 SOURCE='http://someonewhocares.org/hosts/zero/hosts'
 BACKUP='https://raw.github.com/MattiSG/adblock/master/hosts.default'
 TARGET='/etc/hosts'
+DOWNLOADED='/etc/hosts.blocklist'
 ORIGINAL='/etc/hosts.without-adblock'
 
 
@@ -33,12 +34,13 @@ initialize() {
 }
 
 block() {
-	local tmpfile="$TARGET.blacklist"
+	local tmpfile="$DOWNLOADED.part"
 
 	sudo curl $SOURCE --show-error -# --output "$tmpfile" && # -# is "show progress as a bar instead of full metrics"
+	sudo rm -f "$DOWNLOADED" &&	# -f allows to be silent if the file does not exist
+	sudo mv "$tmpfile" "$DOWNLOADED" &&
 	sudo cat "$ORIGINAL" | sudo tee "$TARGET" > /dev/null &&
-	sudo cat "$tmpfile" | sudo tee -a "$TARGET" > /dev/null &&	# append to file rather than overwriting it
-	sudo rm "$tmpfile"
+	sudo cat "$DOWNLOADED" | sudo tee -a "$TARGET" > /dev/null &&	# append to file rather than overwrite it
 	echo 'Hosts file updated.'
 }
 
@@ -58,7 +60,7 @@ unblock() {
 should_update() {
 	local modification_time=$(lwp-request -m 'HEAD' "$SOURCE" | grep 'Last-Modified' | cut -d ':' -f 2- | xargs echo)	# `xargs echo` to trim leading whitespace
 	local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
-	local update_time=$(stat -f %m "$TARGET")
+	local update_time=$(stat -f %m "$DOWNLOADED")
 
 	if [[ $modification_time_epoch -gt $update_time ]]
 	then
