@@ -4,8 +4,10 @@ Block any outgoing request to ad and tracker servers, system-wide.
 Usage
 -----
 
-	$ adblock [--force] [on]	# installs or updates the blocklist, --force to ignore lack of updates
-	$ adblock off	# deactivates blocking, so you can access, for example, affiliate links
+	$ sudo adblock [--force] [on]	# installs or updates the blocklist, --force to ignore lack of updates
+	$ sudo adblock off	# deactivates blocking, so you can access, for example, affiliate links
+
+Yes, you'll need to `sudo`, since you impact DNS resolution for the whole system.
 
 
 Installation
