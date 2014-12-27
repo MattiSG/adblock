@@ -43,6 +43,12 @@ block() {
 }
 
 unblock() {
+	if ! [[ -e "$ORIGINAL" ]]
+	then
+		echo "Already off"
+		exit 0
+	fi
+
 	sudo rm "$TARGET" &&
 	sudo cp "$ORIGINAL" "$TARGET" &&
 	echo 'Hosts file restored.' &&
