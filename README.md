@@ -4,7 +4,7 @@ Block any outgoing request to ad and tracker servers, system-wide.
 Usage
 -----
 
-	$ adblock [on]	# installs or updates the blocklist
+	$ adblock [--force] [on]	# installs or updates the blocklist, --force to ignore lack of updates
 	$ adblock off	# deactivates blocking, so you can access, for example, affiliate links
 
 

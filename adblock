@@ -82,7 +82,7 @@ else
 		echo "Installing blocklist…" &&
 		block &&
 		clear_dns_cache
-	elif should_update
+	elif [[ $1 == '--force' ]] || should_update
 	then
 		block &&
 		clear_dns_cache
