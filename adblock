@@ -25,7 +25,7 @@ initialize() {
 		echo 'Oops, no hosts file found!'
 		read -p "Do you want to install the default one from <$BACKUP>? [y/n]" -n 1 confirm
 		if [[ $confirm == 'y' ]]
-		then curl "$BACKUP" --output "$ORIGINAL"
+		then curl "$BACKUP" --show-error -# --output "$ORIGINAL"
 		else sudo touch "$ORIGINAL"
 		fi
 	fi
