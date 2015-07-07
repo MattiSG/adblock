@@ -15,7 +15,7 @@ Installation
 
 You can download this repo as a ZIP and install the `adblock` script anywhere you want, or use this one-liner:
 
-	sudo mkdir -p /usr/local/bin && sudo curl -# https://raw.githubusercontent.com/MattiSG/adblock/master/adblock --output /usr/local/bin/adblock && sudo chmod u+x /usr/local/bin/adblock
+	sudo mkdir -p /usr/local/bin && sudo curl -\# https://raw.githubusercontent.com/MattiSG/adblock/master/adblock --output /usr/local/bin/adblock && sudo chmod u+x /usr/local/bin/adblock
 
 Copy and paste the above to a Terminal prompt and press enter.
 

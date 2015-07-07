@@ -10,12 +10,17 @@ ORIGINAL='/etc/hosts.without-adblock'
 
 # source: http://support.apple.com/kb/HT5343
 clear_dns_cache() {
-	if sw_vers -productVersion | grep -q 10.6
-	then sudo dscacheutil -flushcache
-	else sudo killall -HUP mDNSResponder
-	fi
+	if command -v sw_vers >/dev/null 2>&1
+	then
+		if sw_vers -productVersion | grep -q '10\.6'
+		then sudo dscacheutil -flushcache
+		elif sw_vers -productVersion | grep -q '10\.10(\.[123])?$'
+		then sudo killall -HUP discoveryd
+		else sudo killall -HUP mDNSResponder
+		fi
 
-	echo 'DNS cache flushed.'
+		echo 'DNS cache flushed.'
+	fi
 }
 
 initialize() {
@@ -26,7 +31,7 @@ initialize() {
 		echo 'Oops, no hosts file found!'
 		read -p "Do you want to install the default one from <$BACKUP>? [y/n]" -n 1 confirm
 		if [[ $confirm == 'y' ]]
-		then curl "$BACKUP" --show-error -# --output "$ORIGINAL"
+		then curl "$BACKUP" --show-error -\# --output "$ORIGINAL"
 		else sudo touch "$ORIGINAL"
 		fi
 	fi
@@ -36,7 +41,7 @@ initialize() {
 block() {
 	local tmpfile="$DOWNLOADED.part"
 
-	sudo curl $SOURCE --show-error -# --output "$tmpfile" && # -# is "show progress as a bar instead of full metrics"
+	sudo curl $SOURCE --show-error -\# --output "$tmpfile" && # -# is "show progress as a bar instead of full metrics"
 	sudo rm -f "$DOWNLOADED" &&	# -f allows to be silent if the file does not exist
 	sudo mv "$tmpfile" "$DOWNLOADED" &&
 	sudo cat "$ORIGINAL" | sudo tee "$TARGET" > /dev/null &&
@@ -59,8 +64,13 @@ unblock() {
 
 should_update() {
 	local modification_time=$(lwp-request -m 'HEAD' "$SOURCE" | grep 'Last-Modified' | cut -d ':' -f 2- | xargs echo)	# `xargs echo` to trim leading whitespace
-	local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
-	local update_time=$(stat -f %m "$DOWNLOADED")
+	if date -v 1d > /dev/null 2>&1; then
+		local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's localea
+		local update_time=$(stat -f %m "$DOWNLOADED")
+	else
+		local modification_time_epoch=$(LANG=en_US date -d"$modification_time" +%s)  # we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
+		local update_time=$(date +%s -r "$DOWNLOADED")
+	fi
 
 	if [[ $modification_time_epoch -gt $update_time ]]
 	then
