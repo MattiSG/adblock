@@ -14,7 +14,7 @@ clear_dns_cache() {
 	then
 		if sw_vers -productVersion | grep -q '10\.6'
 		then sudo dscacheutil -flushcache
-		elif sw_vers -productVersion | grep -q '10\.10[\.123]*'
+		elif sw_vers -productVersion | grep -q '10\.10(\.[123])?$'
 		then sudo killall -HUP discoveryd
 		else sudo killall -HUP mDNSResponder
 		fi
