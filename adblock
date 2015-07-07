@@ -31,7 +31,7 @@ initialize() {
 		echo 'Oops, no hosts file found!'
 		read -p "Do you want to install the default one from <$BACKUP>? [y/n]" -n 1 confirm
 		if [[ $confirm == 'y' ]]
-		then curl "$BACKUP" --show-error -# --output "$ORIGINAL"
+		then curl "$BACKUP" --show-error -\# --output "$ORIGINAL"
 		else sudo touch "$ORIGINAL"
 		fi
 	fi
@@ -41,7 +41,7 @@ initialize() {
 block() {
 	local tmpfile="$DOWNLOADED.part"
 
-	sudo curl $SOURCE --show-error -# --output "$tmpfile" && # -# is "show progress as a bar instead of full metrics"
+	sudo curl $SOURCE --show-error -\# --output "$tmpfile" && # -# is "show progress as a bar instead of full metrics"
 	sudo rm -f "$DOWNLOADED" &&	# -f allows to be silent if the file does not exist
 	sudo mv "$tmpfile" "$DOWNLOADED" &&
 	sudo cat "$ORIGINAL" | sudo tee "$TARGET" > /dev/null &&
