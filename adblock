@@ -10,8 +10,10 @@ ORIGINAL='/etc/hosts.without-adblock'
 
 # source: http://support.apple.com/kb/HT5343
 clear_dns_cache() {
-	if sw_vers -productVersion | grep -q 10.6
+	if sw_vers -productVersion | grep -q '10\.6'
 	then sudo dscacheutil -flushcache
+	elif sw_vers -productVersion | grep -q '10\.10[\.123]*'
+	then sudo killall -HUP discoveryd
 	else sudo killall -HUP mDNSResponder
 	fi
 
