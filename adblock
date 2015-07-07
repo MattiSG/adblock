@@ -61,8 +61,13 @@ unblock() {
 
 should_update() {
 	local modification_time=$(lwp-request -m 'HEAD' "$SOURCE" | grep 'Last-Modified' | cut -d ':' -f 2- | xargs echo)	# `xargs echo` to trim leading whitespace
-	local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
-	local update_time=$(stat -f %m "$DOWNLOADED")
+	if date -v 1d > /dev/null 2>&1; then
+		local modification_time_epoch=$(LANG=en_US date -j -f "%a, %d %b %Y %T %Z" "$modification_time" "+%s")	# we need to specify the locale for this command to allow `date` to parse the date no matter the machine's localea
+		local update_time=$(stat -f %m "$DOWNLOADED")
+	else
+		local modification_time_epoch=$(LANG=en_US date -d"$modification_time" +%s)  # we need to specify the locale for this command to allow `date` to parse the date no matter the machine's locale
+		local update_time=$(date +%s -r "$DOWNLOADED")
+	fi
 
 	if [[ $modification_time_epoch -gt $update_time ]]
 	then
