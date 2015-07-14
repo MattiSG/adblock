@@ -13,6 +13,17 @@ Yes, you'll need to `sudo`, since you impact DNS resolution for the whole system
 Installation
 ------------
 
+### On OS X with `brew`
+
+If you're on OS X and use [Homebrew](http://brew.sh), use the tap:
+
+```shell
+brew tap mattisg/mattisg
+brew install adblock
+```
+
+### Other systems
+
 You can download this repo as a ZIP and install the `adblock` script anywhere you want, or use this one-liner:
 
 	sudo mkdir -p /usr/local/bin && sudo curl -\# https://raw.githubusercontent.com/MattiSG/adblock/master/adblock --output /usr/local/bin/adblock && sudo chmod u+x /usr/local/bin/adblock
