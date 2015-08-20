@@ -15,11 +15,10 @@ Installation
 
 ### On OS X with `brew`
 
-If you're on OS X and use [Homebrew](http://brew.sh), use the tap:
+If you're on OS X and use [Homebrew](http://brew.sh):
 
 ```shell
-brew tap mattisg/mattisg
-brew install adblock
+brew install mattisg/mattisg/adblock
 ```
 
 ### Other systems
