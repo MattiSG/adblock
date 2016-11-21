@@ -48,3 +48,12 @@ Dan Pollock maintains a list of servers to block based on community reports. Thi
 A hosts file maps hostnames (i.e. domains) to IPs. It does the same job as a DNS, but the lookup is made entirely locally.
 
 This feature is used to map all the domains to blacklist to the [`0.0.0.0` IP meta-address](http://en.wikipedia.org/wiki/0.0.0.0).
+
+
+Is it enough?
+-------------
+
+Using such a hosts file ensures adblocking, and a good level of privacy from tracker networks. However, I recommend to complement it with a browser plugin that can block trackers on a site-by-site basis. [Privacy Badger](https://www.eff.org/privacybadger) or [Ghostery](https://www.ghostery.com/try-us/download-browser-extension/) are good choices.
+
+> Analytics software that tracks your behaviour can be served by each site from its own domain, thus being impossible to block on a DNS level.
+> Moreover, some trackers (most notably, Google Analytics) are so common that some websites break when they are blocked, and they are thus not blocked by the hosts file. In order to prevent them from loading, yet easily load them if a site seems broken, an interactive browser plugin is easier.
