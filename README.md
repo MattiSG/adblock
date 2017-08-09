@@ -29,6 +29,12 @@ You can download this repo as a ZIP and install the `adblock` script anywhere yo
 
 Copy and paste the above to a Terminal prompt and press enter.
 
+The `adblock` script was tried and duly tested on:
+* Debian Stretch, 
+* Debian Jessie.
+
+It should work as is on many other GNU/Linux flavours.
+
 
 What does it block?
 -------------------
