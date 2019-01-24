@@ -53,7 +53,7 @@ unblock() {
 	if ! [[ -e "$ORIGINAL" ]]
 	then
 		echo "Already off"
-		exit 0
+		return
 	fi
 
 	sudo rm "$TARGET" &&
@@ -82,6 +82,12 @@ should_update() {
 	fi
 }
 
+stats() {
+	local count=$(grep '^0.0.0.0' "$TARGET" | wc -l | tr -d ' ')
+
+	echo "$count domains currently blocked"
+}
+
 
 if [[ $1 == 'off' ]]
 then unblock && clear_dns_cache
@@ -98,3 +104,5 @@ else
 		clear_dns_cache
 	fi
 fi
+
+stats
