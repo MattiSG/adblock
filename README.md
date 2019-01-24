@@ -31,7 +31,7 @@ You can [download this repo as a ZIP](https://github.com/MattiSG/adblock/archive
 
 Copy and paste the above to a Terminal prompt and press enter.
 
-Tried and duly tested on:
+Tested on:
 
 - Debian Stretch
 - Debian Jessie
@@ -40,6 +40,8 @@ Tried and duly tested on:
 - OS X Yosemite
 - OS X El Capitan
 - macOS Sierra
+- macOS High Sierra
+- macOS Mojave
 
 It should work as is on many other GNU/Linux flavours.
 
