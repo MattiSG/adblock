@@ -21,6 +21,8 @@ If you're on macOS and use [Homebrew](http://brew.sh):
 brew install mattisg/mattisg/adblock
 ```
 
+> The repetition of `mattisg` is not a typo: the first is the name of the tap, the second the GitHub username to install from.
+
 ### Other UNIX (GNU/Linux, macOS…)
 
 You can [download this repo as a ZIP](https://github.com/MattiSG/adblock/archive/master.zip) and install the `adblock` script anywhere you want, or use this one-liner:
