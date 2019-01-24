@@ -19,12 +19,12 @@ clear_dns_cache() {
 		else sudo killall -HUP mDNSResponder
 		fi
 
-		echo 'DNS cache flushed.'
+		echo 'DNS cache flushed'
 	fi
 }
 
 initialize() {
-	echo -n "Backing up your $TARGET file. "
+	echo -n "Backing up your $TARGET file… "
 	if [[ -a "$TARGET" ]]
 	then sudo mv "$TARGET" "$ORIGINAL"
 	else
@@ -35,7 +35,7 @@ initialize() {
 		else sudo touch "$ORIGINAL"
 		fi
 	fi
-	echo "If you need to update your hosts file, edit $ORIGINAL."
+	echo "If you need to update your hosts file, edit $ORIGINAL"
 }
 
 block() {
@@ -46,7 +46,7 @@ block() {
 	sudo mv "$tmpfile" "$DOWNLOADED" &&
 	sudo cat "$ORIGINAL" | sudo tee "$TARGET" > /dev/null &&
 	sudo cat "$DOWNLOADED" | sudo tee -a "$TARGET" > /dev/null &&	# append to file rather than overwrite it
-	echo 'Hosts file updated.'
+	echo 'Hosts file updated'
 }
 
 unblock() {
@@ -58,7 +58,7 @@ unblock() {
 
 	sudo rm "$TARGET" &&
 	sudo cp "$ORIGINAL" "$TARGET" &&
-	echo 'Hosts file restored.' &&
+	echo 'Hosts file restored' &&
 	sudo rm "$ORIGINAL"
 }
 
@@ -74,10 +74,10 @@ should_update() {
 
 	if [[ $modification_time_epoch -gt $update_time ]]
 	then
-		echo "Recent update from $modification_time."
+		echo "Recent update from $modification_time"
 		return 0
 	else
-		echo "No new updates since $modification_time."
+		echo "No new updates since $modification_time"
 		return 1
 	fi
 }
