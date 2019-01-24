@@ -89,7 +89,7 @@ stats() {
 }
 
 
-if [[ $1 == 'off' ]]
+if [[ $1 == 'off' ]] || [[ $1 == '--off' ]]
 then
 	unblock &&
 	clear_dns_cache
