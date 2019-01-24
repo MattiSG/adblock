@@ -90,19 +90,19 @@ stats() {
 
 
 if [[ $1 == 'off' ]]
-then unblock && clear_dns_cache
-else
-	if ! [[ -a "$ORIGINAL" ]]
-	then
-		initialize &&
-		echo "Installing blocklist…" &&
-		block &&
-		clear_dns_cache
-	elif [[ $1 == '--force' ]] || should_update
-	then
-		block &&
-		clear_dns_cache
-	fi
+then
+	unblock &&
+	clear_dns_cache
+elif ! [[ -a "$ORIGINAL" ]]
+then
+	initialize &&
+	echo "Installing blocklist…" &&
+	block &&
+	clear_dns_cache
+elif [[ $1 == '--force' ]] || should_update
+then
+	block &&
+	clear_dns_cache
 fi
 
 stats
