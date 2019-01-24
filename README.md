@@ -69,3 +69,9 @@ Using such a hosts file ensures adblocking, and a good level of privacy from tra
 
 > Analytics software that tracks your behaviour can be served by each site from its own domain, thus being impossible to block on a DNS level.
 > Moreover, some trackers (most notably, Google Analytics) are so common that some websites break when they are blocked, and they are thus not blocked by the hosts file. In order to prevent them from loading, yet easily load them if a site seems broken, an interactive browser plugin is easier.
+
+
+License
+-------
+
+MIT
