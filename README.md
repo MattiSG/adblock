@@ -57,6 +57,10 @@ Tested on:
 - macOS Sierra
 - macOS High Sierra
 - macOS Mojave
+- macOS Catalina
+- macOS Big Sur
+- macOS Monterey
+- macOS Ventura
 
 It should work as is on many other GNU/Linux flavours.
 
