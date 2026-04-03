@@ -61,6 +61,7 @@ Tested on:
 - macOS Big Sur
 - macOS Monterey
 - macOS Ventura
+- macOS Sequoia
 
 It should work as is on many other GNU/Linux flavours.
 
